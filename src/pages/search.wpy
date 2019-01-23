@@ -1,0 +1,297 @@
+<template lang="wxml">
+  <van-search value="{{ value }}" placeholder="请输入搜索关键词" />
+  <wux-grids bordered="{{ false }}">
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+  </wux-grids>
+  <wux-sticky scrollTop="{{ scrollTop }}">
+    <wux-sticky-item>
+      <view slot="title">
+          <view>
+            <wux-filterbar items="{{ items }}" />
+          </view>
+      </view>
+      <view slot="content">
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+      </view>
+    </wux-sticky-item>
+  </wux-sticky>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Search extends wepy.page {
+    config = {
+      usingComponents: {
+        'wux-filterbar': '../components/wux/filterbar/index',
+        "wux-grids": '../components/wux/grids/index',
+        "wux-grid": '../components/wux/grid/index',
+        "van-search": '../components/van/search/index',
+        "van-card": '../components/van/card/index',
+        "wux-sticky": '../components/wux/sticky/index',
+        "wux-sticky-item": '../components/wux/sticky-item/index',
+      }
+    }
+    data = {
+      imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
+      scrollTop: 0,
+      items: [{
+          type: 'radio',
+          label: 'Updated',
+          value: 'updated',
+          children: [{
+              label: 'Recently updated',
+              value: 'desc',
+            },
+            {
+              label: 'Least recently updated',
+              value: 'asc',
+            },
+          ],
+          groups: ['001'],
+        },
+        {
+          type: 'text',
+          label: 'Forks',
+          value: 'forks',
+          groups: ['002'],
+        },
+        {
+          type: 'sort',
+          label: 'Stars',
+          value: 'stars',
+          groups: ['003'],
+        },
+        {
+          type: 'filter',
+          label: '筛选',
+          value: 'filter',
+          children: [{
+              type: 'radio',
+              label: 'Languages（单选）',
+              value: 'language',
+              children: [{
+                  label: 'JavaScript',
+                  value: 'javascript',
+                },
+                {
+                  label: 'HTML',
+                  value: 'html',
+                },
+                {
+                  label: 'CSS',
+                  value: 'css',
+                },
+                {
+                  label: 'TypeScript',
+                  value: 'typescript',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: 'Query（复选）',
+              value: 'query',
+              children: [{
+                  label: 'Angular',
+                  value: 'angular',
+                },
+                {
+                  label: 'Vue',
+                  value: 'vue',
+                },
+                {
+                  label: 'React',
+                  value: 'react',
+                },
+                {
+                  label: 'Avalon',
+                  value: 'avalon',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: '配送方式',
+              value: 'away',
+              children: [{
+                  label: '京东配送',
+                  value: '1',
+                },
+                {
+                  label: '货到付款',
+                  value: '2',
+                },
+                {
+                  label: '仅看有货',
+                  value: '3',
+                },
+                {
+                  label: '促销',
+                  value: '4',
+                },
+                {
+                  label: '全球购',
+                  value: '5',
+                },
+                {
+                  label: 'PLUS专享价',
+                  value: '6',
+                },
+                {
+                  label: '新品',
+                  value: '7',
+                },
+                {
+                  label: '配送全球',
+                  value: '8',
+                },
+              ],
+            },
+            {
+              type: 'radio',
+              label: '性别',
+              value: 'gander',
+              children: [{
+                  label: '男',
+                  value: '0',
+                },
+                {
+                  label: '女',
+                  value: '1',
+                },
+                {
+                  label: '通用',
+                  value: '2',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: '闭合方式',
+              value: 'closed_mode',
+              children: [{
+                  label: '卡扣',
+                  value: '0',
+                },
+                {
+                  label: '拉链',
+                  value: '1',
+                },
+                {
+                  label: '其他',
+                  value: '2',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: '轮子种类',
+              value: 'wheel_type',
+              children: [{
+                  label: '万向轮',
+                  value: '0',
+                },
+                {
+                  label: '单向轮',
+                  value: '1',
+                },
+                {
+                  label: '飞机轮',
+                  value: '2',
+                },
+                {
+                  label: '其他',
+                  value: '3',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: '箱包硬度',
+              value: 'wheel_type',
+              children: [{
+                  label: '硬箱',
+                  value: '0',
+                },
+                {
+                  label: '软硬结合',
+                  value: '1',
+                },
+                {
+                  label: '软箱',
+                  value: '2',
+                },
+                {
+                  label: '其他',
+                  value: '3',
+                },
+              ],
+            },
+            {
+              type: 'checkbox',
+              label: '适用场景',
+              value: 'wheel_type',
+              children: [{
+                  label: '旅行',
+                  value: '0',
+                },
+                {
+                  label: '婚庆',
+                  value: '1',
+                },
+                {
+                  label: '出差',
+                  value: '2',
+                },
+                {
+                  label: '其他',
+                  value: '3',
+                },
+              ],
+            },
+          ],
+          groups: ['001', '002', '003'],
+        },
+      ],
+    }
+    methods = {}
+    onPageScroll(e) {
+      console.log('onPageScroll', e.scrollTop)
+      this.setData({
+        scrollTop: e.scrollTop,
+      })
+    }
+    events = {}
+    onLoad() {}
+  }
+</script>
+
+<style lang="less">
+  /** less **/
+</style>
