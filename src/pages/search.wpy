@@ -1,16 +1,19 @@
 <template lang="wxml">
-  <van-search value="{{ value }}" placeholder="请输入搜索关键词" />
-  <wux-grids bordered="{{ false }}">
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-    <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-  </wux-grids>
-  <wux-sticky scrollTop="{{ scrollTop }}">
+  <van-search 
+    value="{{ value }}" 
+    placeholder="请输入搜索关键词"
+    use-action-slot>
+    <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />南京</view>
+  </van-search>
+  <view>
+    <wux-grids bordered="{{ false }}">
+      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+    </wux-grids>
+  </view>
+  <view class="sticky">
+    <wux-sticky scrollTop="{{ scrollTop }}">
     <wux-sticky-item>
       <view slot="title">
           <view>
@@ -18,29 +21,22 @@
           </view>
       </view>
       <view slot="content">
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
-        <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" />
+        <van-card 
+          thumb-link="detail" 
+          price="2.00/月" 
+          desc="15|南北|东山" 
+          title="合租-天景山公寓永福苑" 
+          tag="近地铁" 
+          thumb="{{ imageURL }}">
+          <view slot="tags">
+            <van-tag plain type="danger" custom-class="tag">标签1</van-tag>
+            <van-tag plain type="danger">标签2</van-tag>
+          </view>
+        </van-card>
       </view>
     </wux-sticky-item>
   </wux-sticky>
+  </view>
 </template>
 
 <script>
@@ -51,13 +47,16 @@
         'wux-filterbar': '../components/wux/filterbar/index',
         "wux-grids": '../components/wux/grids/index',
         "wux-grid": '../components/wux/grid/index',
-        "van-search": '../components/van/search/index',
-        "van-card": '../components/van/card/index',
         "wux-sticky": '../components/wux/sticky/index',
         "wux-sticky-item": '../components/wux/sticky-item/index',
+        "van-search": '../components/van/search/index',
+        "van-card": '../components/van/card/index',
+        "van-icon": '../components/van/icon/index',
+        "van-tag": '../components/van/tag/index',
       }
     }
     data = {
+      active: 0,
       imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
       scrollTop: 0,
       items: [{
@@ -280,9 +279,14 @@
         },
       ],
     }
-    methods = {}
+    methods = {
+      onChangeAddress() {
+        wepy.navigateTo({
+          url: '/pages/address'
+        })
+      }
+    }
     onPageScroll(e) {
-      console.log('onPageScroll', e.scrollTop)
       this.setData({
         scrollTop: e.scrollTop,
       })
@@ -294,4 +298,9 @@
 
 <style lang="less">
   /** less **/
+  .image {
+    width: auto !important;
+    height: 70% !important;
+    padding-bottom: 70% !important;
+  }
 </style>

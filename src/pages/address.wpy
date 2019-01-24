@@ -1,0 +1,56 @@
+<template lang="wxml">
+  <van-tree-select 
+    items="{{ items }}" 
+    main-active-index="{{ mainActiveIndex }}" 
+    active-id="{{ activeId }}" 
+    bind:click-nav="onClickNav" 
+    bind:click-item="onClickItem" />
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Address extends wepy.page {
+    config = {
+      usingComponents: {
+        "van-tree-select": '../components/van/tree-select/index',
+      }
+    }
+    data = {
+      mainActiveIndex: 0,
+      activeId: 1,
+      items: [{
+        text: '所有城市',
+        disabled: false,
+        children: [{
+            text: '温州',
+            id: 1
+          },
+          {
+            text: '杭州',
+            id: 2
+          }
+        ]
+      }]
+    }
+    methods = {
+      onClickNav({
+        detail = {}
+      }) {
+        this.mainActiveIndex = detail.index || 0
+      },
+      onClickItem({
+        detail = {}
+      }) {
+        this.activeId = detail.id
+      }
+    }
+    events = {}
+    onLoad() {}
+    // Other properties
+  }
+</script>
+
+
+<style lang="less">
+  /** less **/
+</style>

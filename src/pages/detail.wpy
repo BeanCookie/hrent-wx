@@ -1,0 +1,144 @@
+<template lang="wxml">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <wux-card full="{{ true }}" title="卡片标题" extra="价格">
+    <view slot="body">
+      <van-row gutter="4">
+        <van-col span="4" class="tag">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+        <van-col span="4">
+          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+        </van-col>
+      </van-row>
+      <wux-white-space size="large" />
+      <van-row>
+        <van-col span="12">
+          朝向：西
+        </van-col>
+        <van-col span="12">
+          朝向：西
+        </van-col>
+        <van-col span="12">
+          朝向：西
+        </van-col>
+        <van-col span="12">
+          朝向：西
+        </van-col>
+      </van-row>
+    </view>
+  </wux-card>
+  <wux-card full="{{ true }}" title="房屋配置">
+  </wux-card>
+  <wux-card full="{{ true }}" title="位置及周边">
+  </wux-card>
+  <wux-card full="{{ true }}" title="为您推荐">
+    <view slot="body">
+      
+<scroll-view scroll-y style="white-space: nowrap; display: flex;display: inline-block;" >
+<!--  -->
+  <view style="background: red; width: 200px; height: 100px; display: inline-block" ></view>
+  <view style="background: green; width: 200px; height: 100px; display: inline-block"></view>
+  <view style="background: blue; width: 200px; height: 100px; display: inline-block"></view>
+  <view style="background: yellow; width: 200px; height: 100px; display: inline-block"></view>
+</scroll-view>
+    </view>
+  </wux-card>
+  <!-- <van-goods-action>
+      <van-goods-action-icon
+        icon="like-o"
+        text="收藏"
+        bind:click="onClickIcon"
+      />
+      <van-goods-action-button
+        text="立即比价"
+        bind:click="onClickButton"
+      />
+    </van-goods-action> -->
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Detail extends wepy.page {
+    config = {
+      usingComponents: {
+        'wux-card': '../components/wux/card/index',
+        'wux-divider': '../components/wux/divider/index',
+        'wux-white-space': '../components/wux/white-space/index',
+        "van-tag": '../components/van/tag/index',
+        "van-row": '../components/van/row/index',
+        "van-col": '../components/van/col/index',
+        "van-goods-action-button": '../components/van/goods-action-button/index',
+        "van-goods-action-icon": '../components/van/goods-action-icon/index',
+        "van-goods-action": '../components/van/goods-action/index',
+      }
+    }
+    data = {
+      imgUrls: [
+        'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
+        'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
+        'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png'
+      ],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000
+    }
+    methods = {}
+    events = {}
+    onLoad() {}
+    // Other properties
+  }
+</script>
+
+
+<style lang="less">
+  /** less **/
+   ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+  .tag {
+    padding-bottom: 10rpx;
+  }
+.scroll-view_H{
+  border: 1rpx solid red;
+  display: flex;
+  white-space: nowrap;   //不换行  最重要的1/2
+  height: 300rpx;
+}
+.scroll-view-item_H{
+  border:  1rpx solid blue;
+  width: 30%;
+  height: 200rpx;
+  display: inline-block;    //行内块  最重要的1/2   有了这两个才能正常横向滚动}
+}
+
+</style>
