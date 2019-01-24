@@ -60,27 +60,48 @@
   </wux-card>
   <wux-card full="{{ true }}" title="为您推荐">
     <view slot="body">
-      
-<scroll-view scroll-y style="white-space: nowrap; display: flex;display: inline-block;" >
-<!--  -->
-  <view style="background: red; width: 200px; height: 100px; display: inline-block" ></view>
-  <view style="background: green; width: 200px; height: 100px; display: inline-block"></view>
-  <view style="background: blue; width: 200px; height: 100px; display: inline-block"></view>
-  <view style="background: yellow; width: 200px; height: 100px; display: inline-block"></view>
-</scroll-view>
+      <scroll-view scroll-x style="white-space: nowrap;width: 100%;">
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+        <view style="display: inline-block">
+          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+        </view>
+      </scroll-view>
     </view>
   </wux-card>
   <!-- <van-goods-action>
-      <van-goods-action-icon
-        icon="like-o"
-        text="收藏"
-        bind:click="onClickIcon"
-      />
-      <van-goods-action-button
-        text="立即比价"
-        bind:click="onClickButton"
-      />
-    </van-goods-action> -->
+          <van-goods-action-icon
+            icon="like-o"
+            text="收藏"
+            bind:click="onClickIcon"
+          />
+          <van-goods-action-button
+            text="立即比价"
+            bind:click="onClickButton"
+          />
+        </van-goods-action> -->
 </template>
 
 <script>
@@ -128,17 +149,16 @@
   .tag {
     padding-bottom: 10rpx;
   }
-.scroll-view_H{
-  border: 1rpx solid red;
-  display: flex;
-  white-space: nowrap;   //不换行  最重要的1/2
-  height: 300rpx;
-}
-.scroll-view-item_H{
-  border:  1rpx solid blue;
-  width: 30%;
-  height: 200rpx;
-  display: inline-block;    //行内块  最重要的1/2   有了这两个才能正常横向滚动}
-}
-
+  .scroll-view_H {
+    border: 1rpx solid red;
+    display: flex;
+    white-space: nowrap; //不换行  最重要的1/2
+    height: 300rpx;
+  }
+  .scroll-view-item_H {
+    border: 1rpx solid blue;
+    width: 30%;
+    height: 200rpx;
+    display: inline-block; //行内块  最重要的1/2   有了这两个才能正常横向滚动}
+  }
 </style>
