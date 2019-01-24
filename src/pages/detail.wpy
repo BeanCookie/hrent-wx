@@ -6,102 +6,112 @@
       </swiper-item>
     </block>
   </swiper>
-  <wux-card full="{{ true }}" title="卡片标题" extra="价格">
-    <view slot="body">
-      <van-row gutter="4">
-        <van-col span="4" class="tag">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-        <van-col span="4">
-          <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
-        </van-col>
-      </van-row>
-      <wux-white-space size="large" />
-      <van-row>
-        <van-col span="12">
-          朝向：西
-        </van-col>
-        <van-col span="12">
-          朝向：西
-        </van-col>
-        <van-col span="12">
-          朝向：西
-        </van-col>
-        <van-col span="12">
-          朝向：西
-        </van-col>
-      </van-row>
-    </view>
-  </wux-card>
-  <wux-card full="{{ true }}" title="房屋配置">
-  </wux-card>
-  <wux-card full="{{ true }}" title="位置及周边">
-  </wux-card>
-  <wux-card full="{{ true }}" title="为您推荐">
-    <view slot="body">
-      <scroll-view scroll-x style="white-space: nowrap;width: 100%;">
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+  <view class="header-wrapper">
+    <wux-card bordered title="卡片标题" extra="价格">
+      <view slot="body">
+        <van-row gutter="4">
+          <van-col span="4" class="tag">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+          <van-col span="4">
+            <van-tag plain color="#f2826a" type="danger">标签1</van-tag>
+          </van-col>
+        </van-row>
+        <wux-white-space size="large" />
+        <van-row>
+          <van-col span="12">
+            朝向：西
+          </van-col>
+          <van-col span="12">
+            朝向：西
+          </van-col>
+          <van-col span="12">
+            朝向：西
+          </van-col>
+          <van-col span="12">
+            朝向：西
+          </van-col>
+        </van-row>
+      </view>
+    </wux-card>
+
+    <wux-white-space />
+    <wux-card bordered title="房屋配置">
+    </wux-card>
+
+    <wux-white-space />
+    <wux-card bordered title="位置及周边">
+    </wux-card>
+
+    <wux-white-space />
+    <wux-card bordered title="为您推荐" >
+      <view slot="body" class="scroll-view-wrapper">
+        <view>
+        <scroll-view scroll-x style="white-space: nowrap;width: 100%;">
+          <view style="display: inline-block">
+            <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+            <wux-wing-blank body-style="margin-left: 20px; margin-right: 20px">
+              <wux-divider show-text="{{ false }}" />
+            </wux-wing-blank>
+            <text>迈皋桥</text>
+          </view>
+          <view style="display: inline-block">
+            <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+            <wux-wing-blank body-style="margin-left: 20px; margin-right: 20px">
+              <wux-divider show-text="{{ false }}" />
+            </wux-wing-blank>
+            <text>迈皋桥</text>
+          </view>
+          <view style="display: inline-block">
+            <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
+            <wux-wing-blank body-style="margin-left: 20px; margin-right: 20px">
+              <wux-divider show-text="{{ false }}" />
+            </wux-wing-blank>
+            <text>迈皋桥</text>
+          </view>
+        </scroll-view>
         </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-        <view style="display: inline-block">
-          <image src="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" mode="aspectFill" />
-        </view>
-      </scroll-view>
-    </view>
-  </wux-card>
-  <!-- <van-goods-action>
-          <van-goods-action-icon
-            icon="like-o"
-            text="收藏"
-            bind:click="onClickIcon"
-          />
-          <van-goods-action-button
-            text="立即比价"
-            bind:click="onClickButton"
-          />
-        </van-goods-action> -->
+      </view>
+    </wux-card>
+
+  </view>
+  <van-goods-action>
+    <van-goods-action-icon
+      icon="like-o"
+      text="收藏"
+      bind:click="onClickIcon"
+    />
+    <van-goods-action-button
+      text="价格分析"
+      type="warning"
+      bind:click="onClickButton"
+    />
+    <van-goods-action-button
+      text="立刻看房"
+      bind:click="onClickButton"
+    />
+  </van-goods-action>
 </template>
 
 <script>
@@ -112,6 +122,7 @@
         'wux-card': '../components/wux/card/index',
         'wux-divider': '../components/wux/divider/index',
         'wux-white-space': '../components/wux/white-space/index',
+        'wux-wing-blank': '../components/wux/wing-blank/index',
         "van-tag": '../components/van/tag/index',
         "van-row": '../components/van/row/index',
         "van-col": '../components/van/col/index',
@@ -146,19 +157,16 @@
     height: 0;
     color: transparent;
   }
-  .tag {
-    padding-bottom: 10rpx;
+  .header-wrapper {
+    padding: 10rpx;
   }
-  .scroll-view_H {
-    border: 1rpx solid red;
-    display: flex;
-    white-space: nowrap; //不换行  最重要的1/2
-    height: 300rpx;
+  .scroll-view-wrapper{
+    margin-bottom: 72rpx;
   }
-  .scroll-view-item_H {
-    border: 1rpx solid blue;
-    width: 30%;
-    height: 200rpx;
-    display: inline-block; //行内块  最重要的1/2   有了这两个才能正常横向滚动}
+  scroll-view {
+    height: 540rpx;
+  }
+  scroll-view image {
+    height: 360rpx;
   }
 </style>
