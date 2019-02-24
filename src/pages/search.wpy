@@ -74,29 +74,59 @@
       scrollTop: 0,
       items: [{
           type: 'radio',
-          label: 'Updated',
-          value: 'updated',
+          label: '合租/整租',
+          value: 'type',
           children: [{
-              label: 'Recently updated',
+              label: '合租',
               value: 'desc',
             },
             {
-              label: 'Least recently updated',
+              label: '整租',
               value: 'asc',
             },
           ],
           groups: ['001'],
         },
         {
-          type: 'text',
-          label: 'Forks',
-          value: 'forks',
+          type: 'radio',
+          label: '租金',
+          value: 'price',
+          children: [{
+              label: '不限',
+              value: '-1',
+            },
+            {
+              label: '1000元以下',
+              value: '1000',
+            },{
+              label: '1000-2000元',
+              value: '2000',
+            },
+          ],
           groups: ['002'],
         },
         {
-          type: 'sort',
-          label: 'Stars',
-          value: 'stars',
+          type: 'radio',
+          label: '区域',
+          value: 'address',
+          children: [{
+              label: '栖霞',
+              value: 'qixia',
+              children: [{
+                label: '栖霞',
+                value: 'qixia',
+              },
+              {
+                label: '江宁',
+                value: 'jiangning',
+              },
+            ],
+            },
+            {
+              label: '江宁',
+              value: 'jiangning',
+            },
+          ],
           groups: ['003'],
         },
         {
