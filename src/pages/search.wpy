@@ -1,15 +1,17 @@
 <template lang="wxml">
   <van-search 
-    value="{{ value }}" 
+    value="{{ title }}" 
     placeholder="请输入搜索关键词"
-    use-action-slot>
+    use-action-slot
+    bind:search="onSearch"
+    >
     <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />南京</view>
   </van-search>
   <view>
     <wux-grids bordered="{{ false }}">
-      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
-      <wux-grid thumb="https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png" label="Wux Weapp" />
+      <wux-grid thumb="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3057634752,3765738747&fm=27&gp=0.jpg" label="自如" />
+      <wux-grid thumb="http://file.baixing.net/201709/4916aa54f4b4c69b4c01591fe6a87046.png" label="百姓" />
+      <wux-grid thumb="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C340%2C2005%2C1324%3Bc0%3Dbaike272%2C5%2C5%2C272%2C90/sign=a66ebdee583d26973a9c521d68cb9ec8/9e3df8dcd100baa1cb93c79f4e10b912c8fc2e52.jpg" label="链家" />
     </wux-grids>
   </view>
   <view class="sticky">
@@ -22,15 +24,24 @@
       </view>
       <view slot="content">
         <van-card 
-          thumb-link="detail" 
-          price="2.00/月" 
-          desc="15|南北|东山" 
-          title="合租-天景山公寓永福苑" 
-          tag="近地铁" 
-          thumb="{{ imageURL }}">
+          wx:for="{{ hits }}" 
+          wx:key="_id" 
+          index="_id" 
+          item="item"
+          thumb-link="{{ detail }}" 
+          price="{{ item._source.price }}" 
+          desc="{{ item._source.address }}" 
+          title="{{ item._source.title }}" 
+          tag="{{ item._source.air_part.air_quality.show_info.is_new_des }}" 
+          thumb="{{ item._source.image_urls[0] }}">
           <view slot="tags">
-            <van-tag plain type="danger" custom-class="tag">标签1</van-tag>
-            <van-tag plain type="danger">标签2</van-tag>
+            <van-tag 
+              wx:for="{{ item._source.tags }}"
+              wx:key="url"
+              item="item"
+              plain 
+              type="danger" 
+              custom-class="tag">{{ item }}</van-tag>
           </view>
         </van-card>
       </view>
@@ -41,6 +52,7 @@
 
 <script>
   import wepy from 'wepy'
+  import api from '@/api/api'
   export default class Search extends wepy.page {
     config = {
       usingComponents: {
@@ -56,6 +68,7 @@
       }
     }
     data = {
+      title: '',
       active: 0,
       imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
       scrollTop: 0,
@@ -278,11 +291,24 @@
           groups: ['001', '002', '003'],
         },
       ],
+      hits: []
     }
     methods = {
       onChangeAddress() {
         wepy.navigateTo({
           url: '/pages/address'
+        })
+      },
+      onSearch(event){
+        this.title = event.detail
+        api.query({
+          query: {
+            title: this.title
+          },
+          method: 'POST'
+        }).then(res => {
+          this.hits = res.data.hits
+          this.$apply()
         })
       }
     }
@@ -292,7 +318,8 @@
       })
     }
     events = {}
-    onLoad() {}
+    onLoad() {
+    }
   }
 </script>
 
