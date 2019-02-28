@@ -1,6 +1,5 @@
 <template lang="wxml">
   <van-search 
-    value="{{ title }}" 
     placeholder="请输入搜索关键词"
     use-action-slot
     bind:search="onSearch"
@@ -19,7 +18,9 @@
     <wux-sticky-item>
       <view slot="title">
           <view>
-            <wux-filterbar items="{{ items }}" />
+            <wux-filterbar
+              bind:change="onChangeFilter"
+              items="{{ items }}" />
           </view>
       </view>
       <view slot="content">
@@ -51,313 +52,215 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import api from '@/api/api'
-  export default class Search extends wepy.page {
-    config = {
-      usingComponents: {
-        'wux-filterbar': '../components/wux/filterbar/index',
-        "wux-grids": '../components/wux/grids/index',
-        "wux-grid": '../components/wux/grid/index',
-        "wux-sticky": '../components/wux/sticky/index',
-        "wux-sticky-item": '../components/wux/sticky-item/index',
-        "van-search": '../components/van/search/index',
-        "van-card": '../components/van/card/index',
-        "van-icon": '../components/van/icon/index',
-        "van-tag": '../components/van/tag/index',
-      }
+import wepy from 'wepy'
+import api from '@/api/api'
+export default class Search extends wepy.page {
+  config = {
+    usingComponents: {
+      'wux-filterbar': '../components/wux/filterbar/index',
+      'wux-grids': '../components/wux/grids/index',
+      'wux-grid': '../components/wux/grid/index',
+      'wux-sticky': '../components/wux/sticky/index',
+      'wux-sticky-item': '../components/wux/sticky-item/index',
+      'van-search': '../components/van/search/index',
+      'van-card': '../components/van/card/index',
+      'van-icon': '../components/van/icon/index',
+      'van-tag': '../components/van/tag/index'
     }
-    data = {
-      title: '',
-      active: 0,
-      imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
-      scrollTop: 0,
-      items: [{
-          type: 'radio',
-          label: '合租/整租',
-          value: 'type',
-          children: [{
-              label: '合租',
-              value: 'desc',
-            },
-            {
-              label: '整租',
-              value: 'asc',
-            },
-          ],
-          groups: ['001'],
-        },
-        {
-          type: 'radio',
-          label: '租金',
-          value: 'price',
-          children: [{
-              label: '不限',
-              value: '-1',
-            },
-            {
-              label: '1000元以下',
-              value: '1000',
-            },{
-              label: '1000-2000元',
-              value: '2000',
-            },
-          ],
-          groups: ['002'],
-        },
-        {
-          type: 'radio',
-          label: '区域',
-          value: 'address',
-          children: [{
-              label: '栖霞',
-              value: 'qixia',
-              children: [{
-                label: '栖霞',
-                value: 'qixia',
+  };
+  data = {
+    params: {},
+    active: 0,
+    imageURL:
+      'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
+    scrollTop: 0,
+    items: [
+      {
+        type: 'radio',
+        label: '合租/整租',
+        value: 'rent_type',
+        children: [
+          {
+            label: '合租',
+            value: '合'
+          },
+          {
+            label: '整租',
+            value: '整'
+          }
+        ],
+        groups: ['001']
+      },
+      {
+        type: 'radio',
+        label: '租金',
+        value: 'price',
+        children: [
+          {
+            label: '不限',
+            value: '-1'
+          },
+          {
+            label: '1000元以下',
+            value: '1000'
+          },
+          {
+            label: '1000-2000元',
+            value: '2000'
+          }
+        ],
+        groups: ['002']
+      },
+      {
+        type: 'radio',
+        label: '区域',
+        value: 'address',
+        children: [
+          {
+            label: '栖霞',
+            value: '栖霞'
+          },
+          {
+            label: '江宁',
+            value: 'jiangning'
+          }
+        ],
+        groups: ['003']
+      },
+      {
+        type: 'filter',
+        label: '筛选',
+        value: 'filter',
+        children: [
+          {
+            type: 'checkbox',
+            label: '装修类型',
+            value: 'decorate',
+            children: [
+              {
+                label: '精装修',
+                value: '精装修'
               },
               {
-                label: '江宁',
-                value: 'jiangning',
+                label: '豪华装修',
+                value: '豪华装修'
+              }
+            ]
+          },
+          {
+            type: 'checkbox',
+            label: '户型',
+            value: 'house_type',
+            children: [
+              {
+                label: '3室1厅1卫',
+                value: '3室1厅1卫'
               },
-            ],
-            },
-            {
-              label: '江宁',
-              value: 'jiangning',
-            },
-          ],
-          groups: ['003'],
-        },
-        {
-          type: 'filter',
-          label: '筛选',
-          value: 'filter',
-          children: [{
-              type: 'radio',
-              label: 'Languages（单选）',
-              value: 'language',
-              children: [{
-                  label: 'JavaScript',
-                  value: 'javascript',
-                },
-                {
-                  label: 'HTML',
-                  value: 'html',
-                },
-                {
-                  label: 'CSS',
-                  value: 'css',
-                },
-                {
-                  label: 'TypeScript',
-                  value: 'typescript',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: 'Query（复选）',
-              value: 'query',
-              children: [{
-                  label: 'Angular',
-                  value: 'angular',
-                },
-                {
-                  label: 'Vue',
-                  value: 'vue',
-                },
-                {
-                  label: 'React',
-                  value: 'react',
-                },
-                {
-                  label: 'Avalon',
-                  value: 'avalon',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: '配送方式',
-              value: 'away',
-              children: [{
-                  label: '京东配送',
-                  value: '1',
-                },
-                {
-                  label: '货到付款',
-                  value: '2',
-                },
-                {
-                  label: '仅看有货',
-                  value: '3',
-                },
-                {
-                  label: '促销',
-                  value: '4',
-                },
-                {
-                  label: '全球购',
-                  value: '5',
-                },
-                {
-                  label: 'PLUS专享价',
-                  value: '6',
-                },
-                {
-                  label: '新品',
-                  value: '7',
-                },
-                {
-                  label: '配送全球',
-                  value: '8',
-                },
-              ],
-            },
-            {
-              type: 'radio',
-              label: '性别',
-              value: 'gander',
-              children: [{
-                  label: '男',
-                  value: '0',
-                },
-                {
-                  label: '女',
-                  value: '1',
-                },
-                {
-                  label: '通用',
-                  value: '2',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: '闭合方式',
-              value: 'closed_mode',
-              children: [{
-                  label: '卡扣',
-                  value: '0',
-                },
-                {
-                  label: '拉链',
-                  value: '1',
-                },
-                {
-                  label: '其他',
-                  value: '2',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: '轮子种类',
-              value: 'wheel_type',
-              children: [{
-                  label: '万向轮',
-                  value: '0',
-                },
-                {
-                  label: '单向轮',
-                  value: '1',
-                },
-                {
-                  label: '飞机轮',
-                  value: '2',
-                },
-                {
-                  label: '其他',
-                  value: '3',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: '箱包硬度',
-              value: 'wheel_type',
-              children: [{
-                  label: '硬箱',
-                  value: '0',
-                },
-                {
-                  label: '软硬结合',
-                  value: '1',
-                },
-                {
-                  label: '软箱',
-                  value: '2',
-                },
-                {
-                  label: '其他',
-                  value: '3',
-                },
-              ],
-            },
-            {
-              type: 'checkbox',
-              label: '适用场景',
-              value: 'wheel_type',
-              children: [{
-                  label: '旅行',
-                  value: '0',
-                },
-                {
-                  label: '婚庆',
-                  value: '1',
-                },
-                {
-                  label: '出差',
-                  value: '2',
-                },
-                {
-                  label: '其他',
-                  value: '3',
-                },
-              ],
-            },
-          ],
-          groups: ['001', '002', '003'],
-        },
-      ],
-      hits: []
-    }
-    methods = {
-      onChangeAddress() {
-        wepy.navigateTo({
-          url: '/pages/address'
-        })
-      },
-      onSearch(event){
-        this.title = event.detail
-        api.query({
+              {
+                label: '2室1厅1卫',
+                value: '2室1厅1卫'
+              },
+              {
+                label: '1室1厅1卫',
+                value: '1室1厅1卫'
+              }
+            ]
+          }
+        ],
+        groups: ['001', '002', '003']
+      }
+    ],
+    hits: []
+  };
+  methods = {
+    onChangeAddress() {
+      wepy.navigateTo({
+        url: '/pages/address'
+      })
+    },
+    onChangeFilter(event) {
+      const { checkedItems } = event.detail
+      this.params = {}
+      checkedItems.forEach(n => {
+        if (n.checked) {
+          if (n.value === 'rent_type') {
+            const selected = n.children
+              .filter(n => n.checked)
+              .map(n => n.value)
+              .join(' ')
+            this.params.rent_type = selected
+          } else if (n.value === 'price') {
+            const selected = n.children
+              .filter(n => n.checked)
+              .map(n => n.value)
+              .join(' ')
+            this.params.price = selected
+          } else if (n.value === 'address') {
+            const selected = n.children
+              .filter(n => n.checked)
+              .map(n => n.value)
+              .join(' ')
+            this.params.address = selected
+          } else if (n.value === 'filter') {
+            n.children.filter(n => n.selected).forEach(n => {
+              if (n.value === 'decorate') {
+                const selected = n.children
+                  .filter(n => n.checked)
+                  .map(n => n.value)
+                  .join(' ')
+                this.params.decorate = selected
+              } else if (n.value === 'house_type') {
+                const selected = n.children
+                  .filter(n => n.checked)
+                  .map(n => n.value)
+                  .join(' ')
+                this.params.house_type = selected
+              }
+            })
+          }
+        }
+      })
+      console.log(this.params)
+    },
+    onSearch(event) {
+      this.params.keyword = event.detail
+      api
+        .query({
           query: {
-            title: this.title
+            params: this.params
           },
           method: 'POST'
-        }).then(res => {
+        })
+        .then(res => {
           this.hits = res.data.hits
+          this.hits.forEach(hit => {
+            if (hit._source.image_urls === undefined) {
+              hit._source.image_urls = []
+              hit._source.image_urls.push(
+                'http://www.51gaifang.com/tu/UploadSoftPic/201902/2019022515282279.jpg'
+              )
+            }
+          })
+          console.log(this.hits)
           this.$apply()
         })
-      }
-    }
-    onPageScroll(e) {
-      this.setData({
-        scrollTop: e.scrollTop,
-      })
-    }
-    events = {}
-    onLoad() {
     }
   }
+  onPageScroll(e) {
+    this.setData({
+      scrollTop: e.scrollTop
+    })
+  }
+  events = {}
+  onLoad() {}
+}
 </script>
 
 <style lang="less">
-  /** less **/
-  .image {
-    width: auto !important;
-    height: 70% !important;
-    padding-bottom: 70% !important;
-  }
+/** less **/
+.image {
+  width: auto !important;
+  height: 70% !important;
+  padding-bottom: 70% !important;
+}
 </style>
