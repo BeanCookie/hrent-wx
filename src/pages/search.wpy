@@ -82,7 +82,7 @@ export default class Search extends wepy.page {
         children: [
           {
             label: '合租',
-            value: '合'
+            value: '单间'
           },
           {
             label: '整租',
