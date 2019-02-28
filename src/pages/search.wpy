@@ -138,8 +138,8 @@ export default class Search extends wepy.page {
             value: 'decorate',
             children: [
               {
-                label: '精装修',
-                value: '精装修'
+                label: '中等装修',
+                value: '中等装修'
               },
               {
                 label: '豪华装修',
