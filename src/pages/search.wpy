@@ -4,7 +4,7 @@
     use-action-slot
     bind:search="onSearch"
     >
-    <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />南京</view>
+    <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />{{ city }}</view>
   </van-search>
   <view>
     <wux-grids bordered="{{ false }}">
@@ -70,9 +70,9 @@ export default class Search extends wepy.page {
   };
   data = {
     params: {},
+    city: '南京',
     active: 0,
-    imageURL:
-      'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
+    imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
     scrollTop: 0,
     items: [
       {
@@ -107,6 +107,14 @@ export default class Search extends wepy.page {
           {
             label: '1000-2000元',
             value: '2000'
+          },
+          {
+            label: '2000-3000元',
+            value: '3000'
+          },
+          {
+            label: '3000-4000元',
+            value: '4000'
           }
         ],
         groups: ['002']
@@ -115,16 +123,7 @@ export default class Search extends wepy.page {
         type: 'radio',
         label: '区域',
         value: 'address',
-        children: [
-          {
-            label: '栖霞',
-            value: '栖霞'
-          },
-          {
-            label: '江宁',
-            value: 'jiangning'
-          }
-        ],
+        children: [],
         groups: ['003']
       },
       {
@@ -224,8 +223,7 @@ export default class Search extends wepy.page {
     },
     onSearch(event) {
       this.params.keyword = event.detail
-      api
-        .query({
+      api.query({
           query: {
             params: this.params
           },
@@ -252,7 +250,25 @@ export default class Search extends wepy.page {
     })
   }
   events = {}
-  onLoad() {}
+  onLoad() {
+     api.district({
+        query: {
+          'keywords': this.city,
+          'subdistrict': 1,
+          'key': api.key
+        }
+      })
+      .then(res => {
+        res.data.districts[0].districts.forEach(district => {
+          let districtItem = {
+            label: district.name,
+            value: district.name
+          }
+          this.items[2].children.push(districtItem)
+        })
+        this.$apply()
+      })
+  }
 }
 </script>
 
