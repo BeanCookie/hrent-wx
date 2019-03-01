@@ -54,6 +54,7 @@
 <script>
 import wepy from 'wepy'
 import api from '@/api/api'
+const DEFAULT_IMAGE = 'http://www.51gaifang.com/tu/UploadSoftPic/201902/2019022515282279.jpg'
 export default class Search extends wepy.page {
   config = {
     usingComponents: {
@@ -72,7 +73,6 @@ export default class Search extends wepy.page {
     params: {},
     city: '南京',
     active: 0,
-    imageURL: 'https://image1.ljcdn.com/materials/list/2016-11-23/phpe022WE.png',
     scrollTop: 0,
     items: [
       {
@@ -197,7 +197,7 @@ export default class Search extends wepy.page {
           } else if (n.value === 'address') {
             const selected = n.children
               .filter(n => n.checked)
-              .map(n => n.value)
+              .map(n => n.value + ',' + n.center)
               .join(' ')
             this.params.address = selected
           } else if (n.value === 'filter') {
@@ -234,9 +234,7 @@ export default class Search extends wepy.page {
           this.hits.forEach(hit => {
             if (hit._source.image_urls === undefined) {
               hit._source.image_urls = []
-              hit._source.image_urls.push(
-                'http://www.51gaifang.com/tu/UploadSoftPic/201902/2019022515282279.jpg'
-              )
+              hit._source.image_urls.push(DEFAULT_IMAGE)
             }
           })
           console.log(this.hits)
@@ -262,7 +260,8 @@ export default class Search extends wepy.page {
         res.data.districts[0].districts.forEach(district => {
           let districtItem = {
             label: district.name,
-            value: district.name
+            value: district.name,
+            center: district.center
           }
           this.items[2].children.push(districtItem)
         })
