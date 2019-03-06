@@ -24,6 +24,8 @@
         'pages/search',
         'pages/address',
         'pages/detail',
+        'pages/recommend',
+        'pages/wish'
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -42,12 +44,12 @@
           selectedIconPath: "images/home-s.png",
           text: "主页"
         }, {
-          pagePath: "pages/search",
+          pagePath: "pages/recommend",
           iconPath: "images/recommend-us.png",
           selectedIconPath: "images/recommend-s.png",
           text: "推荐"
         }, {
-          pagePath: "pages/search",
+          pagePath: "pages/wish",
           iconPath: "images/collect-us.png",
           selectedIconPath: "images/collect-s.png",
           text: "心愿单"

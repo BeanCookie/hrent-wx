@@ -1,0 +1,27 @@
+<template lang="wxml">
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import api from '@/api/api'
+  export default class Recommend extends wepy.page {
+    config = {
+      usingComponents: {
+      }
+    }
+    data = {
+    }
+    methods = {
+    }
+    events = {}
+    onLoad() {
+      
+    }
+    // Other properties
+  }
+</script>
+
+
+<style lang="less">
+  /** less **/
+</style>

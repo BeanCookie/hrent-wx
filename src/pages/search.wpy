@@ -1,6 +1,7 @@
 <template lang="wxml">
   <van-search 
     placeholder="请输入搜索关键词"
+    value="{{ keyword }}"
     use-action-slot
     bind:search="onSearch"
     >
@@ -26,12 +27,12 @@
       <view slot="content">
         <van-card 
           wx:for="{{ hits }}" 
-          wx:key="_id" 
-          index="_id" 
+          wx:key="{{ item._id }}" 
+          index="{{ item._id }}" 
           item="item"
-          thumb-link="{{ detail }}" 
+          thumb-link="detail?houseId={{ item._id }}"
           price="{{ item._source.price }}" 
-          desc="{{ item._source.address }}" 
+          desc="{{ item._source.detail }}" 
           title="{{ item._source.title }}" 
           tag="{{ item._source.air_part.air_quality.show_info.is_new_des }}" 
           thumb="{{ item._source.image_urls[0] }}">
@@ -77,16 +78,24 @@ export default class Search extends wepy.page {
     items: [
       {
         type: 'radio',
-        label: '合租/整租',
-        value: 'rent_type',
+        label: '朝向',
+        value: 'orientation',
         children: [
           {
-            label: '合租',
-            value: '单间'
+            label: '南',
+            value: '南'
           },
-          {
-            label: '整租',
-            value: '整'
+           {
+            label: '东',
+            value: '东'
+          },
+           {
+            label: '西',
+            value: '西'
+          },
+           {
+            label: '北',
+            value: '北'
           }
         ],
         groups: ['001']
@@ -182,12 +191,12 @@ export default class Search extends wepy.page {
       this.params = {}
       checkedItems.forEach(n => {
         if (n.checked) {
-          if (n.value === 'rent_type') {
+          if (n.value === 'orientation') {
             const selected = n.children
               .filter(n => n.checked)
               .map(n => n.value)
               .join(' ')
-            this.params.rent_type = selected
+            this.params.orientation = selected
           } else if (n.value === 'price') {
             const selected = n.children
               .filter(n => n.checked)
@@ -219,10 +228,12 @@ export default class Search extends wepy.page {
           }
         }
       })
-      console.log(this.params)
     },
     onSearch(event) {
+      console.log(this.keyword);
+      
       this.params.keyword = event.detail
+      this.params.city = this.city
       api.query({
           query: {
             params: this.params
@@ -237,18 +248,29 @@ export default class Search extends wepy.page {
               hit._source.image_urls.push(DEFAULT_IMAGE)
             }
           })
-          console.log(this.hits)
           this.$apply()
         })
     }
   }
   onPageScroll(e) {
     this.setData({
-      scrollTop: e.scrollTop
+      scrollTop: e.scrollTop,
     })
   }
   events = {}
-  onLoad() {
+
+  onShow() {
+    this.city = wx.getStorageSync('city')
+  }
+
+  onLoad(options) {
+   
+    
+    wx.openSetting({
+      success(res) {
+        console.log(res)
+      }
+    })
      api.district({
         query: {
           'keywords': this.city,

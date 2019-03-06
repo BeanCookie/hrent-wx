@@ -1,0 +1,60 @@
+<template lang="wxml">
+  <view>
+    <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}">
+      <view slot="left">选择</view>
+      <van-cell-group>
+        <van-card 
+          wx:for="hits" 
+          wx:key="item._id }}" 
+          index=" item._id }}" 
+          item="item"
+          thumb-link="detail?houseId= item._id }}"
+          price=" item._source.price }}" 
+          desc=" item._source.detail }}" 
+          title=" item._source.title }}" 
+          tag=" item._source.air_part.air_quality.show_info.is_new_des }}" 
+          thumb=" item._source.image_urls[0] }}">
+          <view slot="tags">
+            <van-tag 
+              wx:for=" item._source.tags }}"
+              wx:key="url"
+              item="item"
+              plain 
+              type="danger" 
+              custom-class="tag"> item }}</van-tag>
+          </view>
+        </van-card>
+      </van-cell-group>
+      <view slot="right">删除</view>
+    </van-swipe-cell>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import api from '@/api/api'
+  export default class Wish extends wepy.page {
+    config = {
+      usingComponents: {
+        "van-swipe-cell": "../components/van/swipe-cell/index",
+        "van-cell": "../components/van/cell/index",
+        'van-card': '../components/van/card/index',
+        'van-tag': '../components/van/tag/index'
+      }
+    }
+    data = {
+    }
+    methods = {
+    }
+    events = {}
+    onLoad() {
+      
+    }
+    // Other properties
+  }
+</script>
+
+
+<style lang="less">
+  /** less **/
+</style>

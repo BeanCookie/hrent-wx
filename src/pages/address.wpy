@@ -19,6 +19,7 @@
     data = {
       mainActiveIndex: 0,
       activeId: 1,
+      activeText: '',
       items: []
     }
     methods = {
@@ -30,7 +31,9 @@
       onClickItem({
         detail = {}
       }) {
-        this.activeId = detail.id
+        this.activeText = detail.text
+        wepy.setStorageSync('city', this.activeText)
+        wepy.navigateBack()
       }
     }
     events = {}

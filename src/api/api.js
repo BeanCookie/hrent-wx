@@ -2,7 +2,7 @@ import {
   wxRequest
 } from '@/utils/wxRequest'
 
-const apiMall = 'http://localhost:5000'
+const apiMall = 'http://127.0.0.1:5000'
 const apiMap = 'https://restapi.amap.com/v3/config'
 const key = '8ea44dbee078819bc8ea60e65debad03'
 
