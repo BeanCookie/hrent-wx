@@ -12,8 +12,9 @@
   import api from '@/api/api'
   export default class Address extends wepy.page {
     config = {
+      'navigationBarTitleText': '选择城市',
       usingComponents: {
-        "van-tree-select": '../components/van/tree-select/index',
+        'van-tree-select': '../components/van/tree-select/index'
       }
     }
     data = {
@@ -63,7 +64,7 @@
             }
             provinceItem.children.push(cityItem)
           })
-          this.items.push(provinceItem)  
+          this.items.push(provinceItem)
         })
         this.$apply()
       })

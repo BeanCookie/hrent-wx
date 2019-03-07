@@ -9,7 +9,7 @@
     </block>
   </swiper>
   <view class="header-wrapper">
-    <wux-card bordered title="{{ detail._source.title}}" extra="价格:{{ detail._source.price }}">
+    <wux-card bordered title="{{ detail._source.title }}" extra="价格:{{ detail._source.price }}">
       <view slot="body">
         <van-row gutter="4">
           <van-col 
@@ -96,7 +96,7 @@
             <wux-wing-blank body-style="margin-left: 20px; margin-right: 20px">
               <wux-divider show-text="{{ false }}" />
             </wux-wing-blank>
-            <text>{{ item.info }}</text>
+            <text class="rec-info">{{ item.info }}</text>
           </view>
         </scroll-view>
         </view>
@@ -128,6 +128,7 @@ let amap = require('@/lib/amap-wx.js');
 let markersData = []
 export default class Detail extends wepy.page {
   config = {
+    'navigationBarTitleText': '房屋详情',
     usingComponents: {
       'wux-card': '../components/wux/card/index',
       'wux-divider': '../components/wux/divider/index',
@@ -272,5 +273,9 @@ scroll-view {
 }
 scroll-view image {
   height: 360rpx;
+}
+.rec-info {
+  text-align: center;
+  margin-left: 25%;
 }
 </style>

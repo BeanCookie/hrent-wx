@@ -3,9 +3,10 @@
     placeholder="请输入搜索关键词"
     value="{{ keyword }}"
     use-action-slot
-    bind:search="onSearch"
+    @search="onSearch"
+    @change="onChange"
     >
-    <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />{{ city }}</view>
+    <view slot="action" @tap="onChangeAddress"><van-icon name="map-marked" size="12px" />{{ params.city }}</view>
   </van-search>
   <view>
     <wux-grids bordered="{{ false }}">
@@ -39,7 +40,7 @@
           <view slot="tags">
             <van-tag 
               wx:for="{{ item._source.tags }}"
-              wx:key="url"
+              wx:key="{{ item.url }}"
               item="item"
               plain 
               type="danger" 
@@ -58,6 +59,7 @@ import api from '@/api/api'
 const DEFAULT_IMAGE = 'http://www.51gaifang.com/tu/UploadSoftPic/201902/2019022515282279.jpg'
 export default class Search extends wepy.page {
   config = {
+    'navigationBarTitleText': '帮你租',
     usingComponents: {
       'wux-filterbar': '../components/wux/filterbar/index',
       'wux-grids': '../components/wux/grids/index',
@@ -71,8 +73,10 @@ export default class Search extends wepy.page {
     }
   };
   data = {
-    params: {},
-    city: '南京',
+    params: {
+      city: '南京',
+      keyword: '苑'
+    },
     active: 0,
     scrollTop: 0,
     items: [
@@ -85,15 +89,15 @@ export default class Search extends wepy.page {
             label: '南',
             value: '南'
           },
-           {
+          {
             label: '东',
             value: '东'
           },
-           {
+          {
             label: '西',
             value: '西'
           },
-           {
+          {
             label: '北',
             value: '北'
           }
@@ -186,9 +190,17 @@ export default class Search extends wepy.page {
         url: '/pages/address'
       })
     },
+    onPageScroll(e) {
+      this.setData({
+        scrollTop: e.scrollTop
+      })
+    },
     onChangeFilter(event) {
       const { checkedItems } = event.detail
-      this.params = {}
+      this.params = {
+        city: this.params.city,
+        keyword: this.params.keyword
+      }
       checkedItems.forEach(n => {
         if (n.checked) {
           if (n.value === 'orientation') {
@@ -228,67 +240,56 @@ export default class Search extends wepy.page {
           }
         }
       })
+      this.onSearch()
     },
-    onSearch(event) {
-      console.log(this.keyword);
-      
+    onChange(event) {
       this.params.keyword = event.detail
-      this.params.city = this.city
-      api.query({
-          query: {
-            params: this.params
-          },
-          method: 'POST'
-        })
-        .then(res => {
-          this.hits = res.data.hits
-          this.hits.forEach(hit => {
-            if (hit._source.image_urls === undefined) {
-              hit._source.image_urls = []
-              hit._source.image_urls.push(DEFAULT_IMAGE)
-            }
-          })
-          this.$apply()
-        })
     }
   }
-  onPageScroll(e) {
-    this.setData({
-      scrollTop: e.scrollTop,
+  onSearch() {
+    api.query({
+      query: {
+        params: this.params
+      },
+      method: 'POST'
+    })
+    .then(res => {
+      this.hits = res.data.hits
+      this.hits.forEach(hit => {
+        if (hit._source.image_urls === undefined) {
+          hit._source.image_urls = []
+          hit._source.image_urls.push(DEFAULT_IMAGE)
+        }
+      })
+      this.$apply()
     })
   }
   events = {}
 
   onShow() {
-    this.city = wx.getStorageSync('city')
+    this.params.city = wx.getStorageSync('city')
+    this.onSearch()
   }
 
   onLoad(options) {
-   
-    
-    wx.openSetting({
-      success(res) {
-        console.log(res)
+    api.district({
+      query: {
+        'keywords': this.params.city,
+        'subdistrict': 1,
+        'key': api.key
       }
     })
-     api.district({
-        query: {
-          'keywords': this.city,
-          'subdistrict': 1,
-          'key': api.key
+    .then(res => {
+      res.data.districts[0].districts.forEach(district => {
+        let districtItem = {
+          label: district.name,
+          value: district.name,
+          center: district.center
         }
+        this.items[2].children.push(districtItem)
       })
-      .then(res => {
-        res.data.districts[0].districts.forEach(district => {
-          let districtItem = {
-            label: district.name,
-            value: district.name,
-            center: district.center
-          }
-          this.items[2].children.push(districtItem)
-        })
-        this.$apply()
-      })
+      this.$apply()
+    })
   }
 }
 </script>

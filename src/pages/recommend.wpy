@@ -1,4 +1,20 @@
 <template lang="wxml">
+  <view>
+    <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}">
+      <view slot="left" class="van-swipe-cell__left">喜欢</view>
+      <van-cell-group>
+        <van-card 
+          item="item"
+          thumb-link="detail?houseId= item._id "
+          price=" item._source.price " 
+          desc=" item._source.detail " 
+          title=" item._source.title " 
+          thumb="http://pic.ziroom.com/house_images/g2m1/M00/8D/6A/v800x600_ChAFB1uTu06AS1KJABTtfmaWRrM709.JPG">
+        </van-card>
+      </van-cell-group>
+      <view slot="right" class="van-swipe-cell__right">不喜欢</view>
+    </van-swipe-cell>
+  </view>
 </template>
 
 <script>
@@ -6,7 +22,12 @@
   import api from '@/api/api'
   export default class Recommend extends wepy.page {
     config = {
+      'navigationBarTitleText': '个性推荐',
       usingComponents: {
+        "van-swipe-cell": "../components/van/swipe-cell/index",
+        "van-cell": "../components/van/cell/index",
+        'van-card': '../components/van/card/index',
+        'van-tag': '../components/van/tag/index'
       }
     }
     data = {
@@ -24,4 +45,27 @@
 
 <style lang="less">
   /** less **/
+.van-swipe-cell__left {
+  display: inline-block;
+  width: 65px;
+  height: 44px;
+  font-size: 15px;
+  line-height: 44px;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
+  vertical-align:middle;
+}
+
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 65px;
+  height: 44px;
+  font-size: 15px;
+  line-height: 44px;
+  color: #fff;
+  text-align: center;
+  background-color: #444;
+  vertical-align:middle;
+}
 </style>
