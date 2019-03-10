@@ -1,0 +1,153 @@
+<template>
+  <view class="loginWay">
+    <van-cell-group>
+      <van-field value="{{ telephone }}"
+        required
+        clearable
+        label="手机号"
+        placeholder="请输入手机号"
+        bindchange="telephoneHandle" />
+      <van-field value="{{ code }}"
+        center
+        required
+        clearable
+        label="手机验证码"
+        placeholder="请输入验证码"
+        border="{{ false }}"
+        use-button-slot
+        bindchange="codeHandle">
+        <van-button slot="button"
+          size="small"
+          type="primary">发送验证码</van-button>
+      </van-field>
+      <van-field value="{{ password }}"
+        type="{{ showPassword }}"
+        label="新密码"
+        placeholder="请输入新密码"
+        required
+        border="{{ false }}"
+        icon="{{ showEye }}"
+        bind:click-icon="iconClick"
+        bindchange="passwordHandle" />
+    </van-cell-group>
+    <view class="btn"
+          bindtap="handle">
+      <p>提交</p>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Rechange extends wepy.page {
+    config = {
+      navigationBarTitleText: '修改密码',
+      usingComponents: {
+        "van-cell-group": "../components/van/cell-group/index",
+        "van-field": "../components/van/field/index",
+        "van-button": "../components/van/button/index",
+      }
+    }
+    data = {
+      name: '',
+      inputVal: 'qing',
+      loginWay: '手机号',
+      showPassword: 'text',
+      showEye: 'eye',
+      show: true,
+      telephone: '',
+      code: '',
+      password: ''
+
+    }
+    methods = {
+      iconClick() {
+        this.show = !this.show;
+        if (this.show == true) {
+          this.showPassword = 'text';
+          this.showEye = 'eye';
+        } else {
+          this.showPassword = 'password';
+          this.showEye = 'closed-eye';
+        }
+      },
+      telephoneHandle(e) {
+        this.telephone = e.detail;
+      },
+      codeHandle(e) {
+        this.code = e.detail;
+      },
+      passwordHandle(e) {
+        this.password = e.detail;
+      },
+      handle() {
+        let telephoneReg = /^1[34578]\d{9}$/;
+        let passwordReg = /^[a-z0-9]{6,15}$/;
+        let telephone = this.telephone;
+        let code = this.code;
+        let password = this.password;
+        if (telephone !== '' && code !== '' && password !== '') {
+          if (!telephoneReg.test(telephone)) {
+            wx.showToast({
+              title: '请输入11位数字的手机号',
+              icon: 'none',
+              duration: 3000
+            })
+          } else if (!passwordReg.test(password)) {
+            wx.showToast({
+              title: '请输入6-15位新密码(英文/数字)',
+              icon: 'none',
+              duration: 3000
+            })
+          } else {
+            //调用接口或在之前调用
+          }
+        } else {
+          wx.showToast({
+            title: '任意一项不得为空',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      }
+    }
+    computed = {
+      inputVal() {
+        if (this.name == '手机号登录') {
+          return '请输入手机号'
+        } else if (this.name == '邮箱号登录') {
+          return '请输入邮箱号'
+        }
+      },
+      loginWay() {
+        if (this.name == '手机号登录') {
+          return '手机号'
+        } else if (this.name == '邮箱号登录') {
+          return '邮箱号'
+        }
+      }
+    }
+    onLoad(options) {
+      this.name = options.name;
+      console.log(this.name)
+    }
+  }
+</script>
+<style lang="less">
+  .loginWay {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+    .btn {
+      width: 90%;
+      padding: 10px;
+      background: #ff6a6a;
+      display: flex;
+      justify-content: center;
+      border-radius: 10px;
+      color: #fff;
+      margin-top: 20px;
+    }
+  }
+</style>
+
+

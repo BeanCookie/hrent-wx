@@ -1,0 +1,224 @@
+<template>
+  <view class="login_content">
+    <view class="login_top">
+    </view>
+    <view class="login_body">
+      <view wx:if="{{ isLogin }}">
+        <view class="btn"
+              bindtap="onclick(1)">
+          <van-icon name="contact"
+                    size="20px" />
+          <p>登录</p>
+        </view>
+        <view class="btn"
+              style="background:#009100"
+              bindtap="onclick(2)">
+          <van-icon name="user-circle-o"
+                    size="20px" />
+          <p>注册</p>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="btn"
+              style="background:#c6a300;"
+              bindtap="onclick(3)">
+          <van-icon name="edit"
+                    size="20px" />
+          <p>修改密码</p>
+        </view>
+        <view class="btn"
+              style="background:#ff7575;"
+              bindtap="logout">
+          <van-icon name="edit"
+                    size="20px" />
+          <p>退出</p>
+        </view>
+        <van-dialog id="van-dialog" />
+      </view>
+    </view>
+    <view class="login_bottom">
+      <van-action-sheet show="{{ login }}"
+                        actions="{{ loginPull }}"
+                        bind:close="onClose(1)"
+                        bind:select="onSelect" />
+      <van-action-sheet show="{{ regist }}"
+                        actions="{{ registPull }}"
+                        bind:close="onClose(2)"
+                        bind:select="onSelect" />
+      
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Dialog from '../components/van/dialog/dialog'
+  import state from '../utils/state'
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '登录/注册/修改密码',
+      usingComponents: {
+        "van-icon": "../components/van/icon/index",
+        "van-action-sheet": "../components/van/action-sheet/index",
+        "van-dialog": '../components/van/dialog/index'
+      }
+    }
+    data = {
+      login: false,
+      regist: false,
+      rechange: false,
+      isLogin: false,
+      loginPull: [
+        {
+          name: '登录',
+          className: 'login'
+        },
+        {
+          name: '手机号登录',
+          className: 'phone'
+        }, {
+          name: '邮箱号登录',
+          className: 'email'
+        }
+      ],
+      registPull: [
+        {
+          name: '注册',
+          className: 'login'
+        },
+        {
+          name: '手机号注册',
+          className: 'phoneRegist'
+        }, {
+          name: '邮箱号注册',
+          className: 'emailRegist'
+        }
+      ],
+      rechangePull: [
+        {
+          name: '修改密码',
+          className: 'login'
+        },
+        {
+          name: '修改密码',
+          className: 'phoneChange'
+        }
+      ]
+    }
+    methods = {
+      onclick(type) {
+        if (type == 1) {
+          this.login = true;
+        } else if (type == 2) {
+          this.regist = true;
+        } else if (type == 3) {
+          this.$navigate('rechange')
+        }
+      },
+      onClose(type) {
+        if (type == 1) {
+          this.login = false;
+        } else if (type == 2) {
+          this.regist = false;
+        } else if (type == 3) {
+          this.rechange = false;
+        }
+      },
+      onSelect(event) {
+        console.log(event.detail.name);
+        if (event.detail.name.indexOf("登录") > -1) {
+          this.$navigate('loginWay?name=' + event.detail.name)
+        } else if (event.detail.name.indexOf("注册") > -1) {
+          this.$navigate('registWay?name=' + event.detail.name)
+        } else if (event.detail.name.indexOf("修改密码") > -1) {
+          this.$navigate('rechange')
+        }
+      },
+      logout() {
+        // this.show=true
+        Dialog.confirm({
+          title: '',
+          message: '确定要退出吗？'
+        }).then(() => {
+          state.removeUser()
+          this.$apply()
+          wx.showToast({
+            title: '退出成功',
+            icon: 'success',
+            duration: 3000
+          })
+          this.$apply()
+        }).catch(() => {
+        });
+      },
+    }
+  }
+</script>
+<style lang="less">
+  .login_content {
+    width: 96%;
+    .login_top {
+      margin-left: 5%;
+      p {
+        font-size: 12px;
+        color: #bebebe;
+      }
+    }
+    .login_body {
+      margin-top: 20px;
+      .btn {
+        width: 94%;
+        // height: 30px;
+        background: #ff6a6a;
+        margin-left: 5%;
+        color: #fff;
+        padding: 6px 0 2px 0;
+        display: flex;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 15px;
+        p {
+          margin-left: 5px;
+          font-size: 14px;
+        }
+      }
+    }
+    .login_bottom {
+      .login {
+        font-size: 14px;
+        color: #666666;
+      }
+      .phone {
+        color: #fff;
+        background: #ff6a6a;
+        margin-bottom: 10px;
+        width: 90%;
+      }
+      .email {
+        border: 1px solid #ff6a6a;
+        color: #ff6a6a;
+        margin-bottom: 20px;
+        width: 90%;
+      }
+      .phoneRegist {
+        color: #fff;
+        background: #009100;
+        margin-bottom: 10px;
+        width: 90%;
+      }
+      .emailRegist {
+        border: 1px solid #009100;
+        color: #009100;
+        margin-bottom: 20px;
+        width: 90%;
+      }
+      .phoneChange {
+        color: #fff;
+        background: #eac100;
+        margin-bottom: 10px;
+        width: 90%;
+      }
+    }
+  }
+</style>
+
+

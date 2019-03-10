@@ -19,7 +19,12 @@
         'pages/address',
         'pages/detail',
         'pages/recommend',
-        'pages/wish'
+        'pages/wish',
+        'pages/rechange',
+        'pages/login',
+        'pages/loginWay',
+        'pages/registWay',
+        'pages/user'
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -46,6 +51,11 @@
           iconPath: 'images/collect-us.png',
           selectedIconPath: 'images/collect-s.png',
           text: '心愿单'
+        }, {
+          pagePath: 'pages/login',
+          text: '个人中心',
+          iconPath: 'images/user-us.png',
+          selectedIconPath: 'images/user-s.png'
         }]
       }
     }
@@ -54,6 +64,6 @@
       this.use('requestfix')
       this.use('promisify')
     }
-    onLaunch() {}
+    onLaunch() { }
   }
 </script>

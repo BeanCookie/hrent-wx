@@ -4,12 +4,12 @@
       wx:for="{{ detail._source.image_urls }}"
       wx:key="{{ item }}">
       <swiper-item>
-        <image src="{{item}}" mode="aspectFill" />
+        <image src="{{item}}" mode="aspectFit" />
       </swiper-item>
     </block>
   </swiper>
   <view class="header-wrapper">
-    <wux-card bordered title="{{ detail._source.title }}" extra="价格:{{ detail._source.price }}">
+    <wux-card class="top" bordered title="{{ detail._source.title }}" extra="价格:{{ detail._source.price }}">
       <view slot="body">
         <van-row gutter="4">
           <van-col 
@@ -46,7 +46,7 @@
           wx:for="{{ detail._source.chums }}"
           wx:key="{{ item }}"
           item="item">
-            <van-row>
+            <van-row class="frend">
               <van-col span="12">
                 房间：{{ item.bedroom }}
               </van-col>
@@ -263,7 +263,7 @@ export default class Detail extends wepy.page {
   padding: 0 15px;
 }
 .header-wrapper {
-  padding: 10rpx;
+  // padding: 10rpx;
 }
 .scroll-view-wrapper {
   margin-bottom: 72rpx;
@@ -277,5 +277,18 @@ scroll-view image {
 .rec-info {
   text-align: center;
   margin-left: 25%;
+}
+.frend{
+  display: block;
+  margin-bottom: 10px;
+}
+.header-wrapper .wux-card__extra{
+  color: red;
+}
+.header-wrapper .wux-card__content{
+  color:#eac100;
+}
+.top .wux-card__content{
+  color: #b87070;
 }
 </style>

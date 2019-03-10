@@ -1,7 +1,7 @@
 <template lang="wxml">
   <view>
     <van-swipe-cell right-width="{{ 65 }}">
-      <van-cell-group>
+      <van-cell-group class="card">
         <van-card 
           item="item"
           thumb-link="detail?houseId= item._id "
@@ -56,11 +56,17 @@
   display: inline-block;
   width: 65px;
   height: 44px;
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: bold;
   line-height: 44px;
   color: #fff;
   text-align: center;
   background-color: #f44;
   vertical-align:middle;
+  position: relative;
+  top: 25px;
+}
+.card .van-card__content{
+  top: 10px;
 }
 </style>

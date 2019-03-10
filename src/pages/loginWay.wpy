@@ -1,0 +1,209 @@
+<template>
+  <view class="loginWay">
+    <van-cell-group>
+      <van-field value="{{ username }}"
+                 required
+                 clearable
+                 label="用户名"
+                 placeholder="请输入用户名"
+                 bindchange="usernameHandle" />
+      <van-field value="{{ phone }}"
+                 required
+                 clearable
+                 label="{{ loginWay }}"
+                 placeholder="{{ inputVal }}"
+                 bindchange="phoneHandle" />
+
+      <van-field value="{{ password }}"
+                 type="{{ showPassword }}"
+                 label="密码"
+                 placeholder="请输入密码"
+                 required
+                 border="{{ false }}"
+                 bindchange="passwordHandle"
+                 icon="{{ showEye }}"
+                 bind:click-icon="iconClick" />
+
+    </van-cell-group>
+    <view class="btn"
+          bindtap="login">
+      <p>登录</p>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import api from '../api/api';
+  import state from '../utils/state';
+  export default class LoginWay extends wepy.page {
+    config = {
+      navigationBarTitleText: '登录',
+      usingComponents: {
+        "van-cell-group": "../components/van/cell-group/index",
+        "van-field": "../components/van/field/index",
+        "van-button": "../components/van/button/index",
+        "van-notice-bar": "../packages/van/notice-bar/index"
+      }
+    }
+    data = {
+      name: '',
+      username: '',
+      phone: '',
+      password: '',
+      showPassword: 'text',
+      showEye: 'eye',
+      show: true
+
+    }
+    methods = {
+      usernameHandle(e) {
+        this.username = e.detail
+      },
+      phoneHandle(e) {
+        this.phone = e.detail
+      },
+      passwordHandle(e) {
+        this.password = e.detail
+      },
+      iconClick() {
+        this.show = !this.show;
+        if (this.show == true) {
+          this.showPassword = 'text';
+          this.showEye = "eye";
+        } else {
+          this.showPassword = 'password';
+          this.showEye = "closed-eye";
+        }
+      },
+      login() {
+        let username = this.username;
+        let phone = this.phone;
+        let password = this.password;
+        if (this.name == "手机号登录") {
+          if (username === '') {
+            wx.showToast({
+              title: '用户名不能为空',
+              icon: 'none',
+            })
+          } else if (phone === '') {
+            wx.showToast({
+              title: '手机号不能为空',
+              icon: 'none',
+            })
+          } else if (password === '') {
+            wx.showToast({
+              title: '密码不能为空',
+              icon: 'none',
+            })
+          } else {
+            api.login({
+              query: {
+                mobile: this.phone,
+                password: this.password
+              },
+              method: 'POST'
+            }).then(res => {
+              if (res.statusCode == 200) {
+                wx.showToast({
+                  title: '登录成功',
+                  icon: 'success',
+                })
+                wx.switchTab({
+                  url: './search'
+                })
+                state.saveUser(res.data)
+              } else {
+                wx.showToast({
+                  title: '手机号或密码不正确',
+                  icon: 'none',
+                })
+              }
+            })
+
+          }
+        }
+        if (this.name == "邮箱号登录") {
+          if (username === '') {
+            wx.showToast({
+              title: '用户名不能为空',
+              icon: 'none',
+            })
+          } else if (phone === '') {
+            wx.showToast({
+              title: '邮箱号不能为空',
+              icon: 'none',
+            })
+          } else if (password === '') {
+            wx.showToast({
+              title: '密码不能为空',
+              icon: 'none',
+            })
+          } else {
+            api.login({
+              query: {
+                email: this.phone,
+                password: this.password
+              },
+              method: 'POST'
+            }).then(res => {
+              if (res.statusCode == 200) {
+                wx.showToast({
+                  title: '登录成功',
+                  icon: 'success',
+                })
+                wx.switchTab({
+                  url: './search'
+                })
+                state.saveUser(res.data)
+              } else {
+                wx.showToast({
+                  title: '邮箱号或密码不正确',
+                  icon: 'none',
+                })
+              }
+            })
+          }
+        }
+      }
+    }
+    computed = {
+      inputVal() {
+        if (this.name == "手机号登录") {
+          return "请输入手机号"
+        } else if (this.name == "邮箱号登录") {
+          return "请输入邮箱号"
+        }
+      },
+      loginWay() {
+        if (this.name == "手机号登录") {
+          return "手机号"
+        } else if (this.name == "邮箱号登录") {
+          return "邮箱号"
+        }
+      },
+    }
+    onLoad(options) {
+      this.name = options.name;
+      console.log(this.name)
+    }
+  }
+</script>
+<style lang="less">
+  .loginWay {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+    .btn {
+      width: 90%;
+      padding: 10px;
+      background: #ff6a6a;
+      display: flex;
+      justify-content: center;
+      border-radius: 10px;
+      color: #fff;
+      margin-top: 20px;
+    }
+  }
+</style>
+
+
