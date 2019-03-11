@@ -16,7 +16,7 @@ function checkLogin() {
       duration: 3000
     })
     sleep(1000)
-    wepy.redirectTo({ url: 'login' })
+    wepy.switchTab({ url: 'login' })
   }
 }
 

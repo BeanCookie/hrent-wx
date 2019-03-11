@@ -1,12 +1,6 @@
 <template>
   <view class="loginWay">
     <van-cell-group>
-      <van-field value="{{ username }}"
-                 required
-                 clearable
-                 label="用户名"
-                 placeholder="请输入用户名"
-                 bindchange="usernameHandle" />
       <van-field value="{{ phone }}"
                  required
                  clearable
@@ -42,7 +36,7 @@
         "van-cell-group": "../components/van/cell-group/index",
         "van-field": "../components/van/field/index",
         "van-button": "../components/van/button/index",
-        "van-notice-bar": "../packages/van/notice-bar/index"
+        "van-notice-bar": "../components/van/notice-bar/index"
       }
     }
     data = {
@@ -80,12 +74,7 @@
         let phone = this.phone;
         let password = this.password;
         if (this.name == "手机号登录") {
-          if (username === '') {
-            wx.showToast({
-              title: '用户名不能为空',
-              icon: 'none',
-            })
-          } else if (phone === '') {
+          if (phone === '') {
             wx.showToast({
               title: '手机号不能为空',
               icon: 'none',
@@ -123,12 +112,7 @@
           }
         }
         if (this.name == "邮箱号登录") {
-          if (username === '') {
-            wx.showToast({
-              title: '用户名不能为空',
-              icon: 'none',
-            })
-          } else if (phone === '') {
+          if (phone === '') {
             wx.showToast({
               title: '邮箱号不能为空',
               icon: 'none',

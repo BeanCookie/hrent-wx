@@ -1,4 +1,5 @@
 <template lang="wxml">
+  <van-notify id="van-notify" />
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <block 
       wx:for="{{ detail._source.image_urls }}"
@@ -105,9 +106,9 @@
   </view>
   <van-goods-action>
     <van-goods-action-icon
-      icon="like-o"
-      text="收藏"
-      bind:click="onClickIcon"
+      icon="{{ collectionIcon }}"
+      text="{{ collectionText }}"
+      @tap="onWish"
     />
     <van-goods-action-button
       text="价格分析"
@@ -124,8 +125,10 @@
 <script>
 import wepy from 'wepy';
 import api from '@/api/api';
+import state from '@/utils/state';
 let amap = require('@/lib/amap-wx.js');
 let markersData = []
+import Notify from '@/components/van/notify/notify'
 export default class Detail extends wepy.page {
   config = {
     'navigationBarTitleText': '房屋详情',
@@ -139,10 +142,12 @@ export default class Detail extends wepy.page {
       'van-col': '../components/van/col/index',
       'van-goods-action-button': '../components/van/goods-action-button/index',
       'van-goods-action-icon': '../components/van/goods-action-icon/index',
-      'van-goods-action': '../components/van/goods-action/index'
+      'van-goods-action': '../components/van/goods-action/index',
+      "van-notify": "../components/van/notify/index"
     }
-  };
+  }
   data = {
+    isCollected: false,
     markers: [],
     latitude: '',
     longitude: '',
@@ -151,7 +156,15 @@ export default class Detail extends wepy.page {
     autoplay: true,
     interval: 5000,
     duration: 1000
-  };
+  }
+  computed = {
+    collectionIcon() {
+      return this.isCollected ? 'like' : 'like-o'
+    },
+    collectionText() {
+      return this.isCollected ? '取消收藏' : '收藏'
+    }
+  }
   methods = {
     makertap(e) {
       console.log(e);
@@ -182,9 +195,57 @@ export default class Detail extends wepy.page {
           height: data[j].height
         });
       }
+    },
+    onWish() {
+      if (this.isCollected) {
+        api.collection({
+          query: {
+            userId: state.getUser().id,
+            houseUrl: this.detail._source.url
+          },
+          method: 'DELETE'
+        }).then(res => {
+          if (res.statusCode === 200) {
+            this.isCollected = false
+            this.$apply()
+            Notify('取消收藏成功！')
+          }
+        })
+      } else {
+        api.collection({
+          query: {
+            userId: state.getUser().id,
+            houseUrl: this.detail._source.url
+          },
+          method: 'POST'
+        }).then(res => {
+          if (res.statusCode === 200) {
+            this.isCollected = true
+            this.$apply()
+            Notify('收藏成功！')
+          }
+        })
+      }
     }
-  };
-  events = {};
+  }
+  events = {}
+
+  onShow() {
+    api.collection({
+      pathValue: state.getUser().id,
+      method: 'GET'
+    }).then(res => {
+      if (res.statusCode === 200) {
+        res.data.forEach(item => {
+          if (this.detail._source.url == item.url) {
+            this.isCollected = true
+            this.$apply()
+            return
+          }
+        })
+      }
+    })
+  }
 
   onLoad(options) {
     console.log(amap);
@@ -217,10 +278,9 @@ export default class Detail extends wepy.page {
       }
     };
     amapFun.getPoiAround(params);
-    api
-      .query({
+    api.query({
         query: {
-          params: { id: options.houseId }
+          params: { url: options.houseUrl }
         },
         method: 'POST'
       })

@@ -1,17 +1,26 @@
 <template lang="wxml">
   <view>
-    <van-swipe-cell right-width="{{ 65 }}">
-      <van-cell-group class="card">
+    <van-notify id="van-notify" />
+    <van-swipe-cell 
+      wx:for="{{ collections }}"
+      wx:key="{{ item.id }}" 
+      index="{{ item.id }}" 
+      item="item"
+      right-width="{{ 65 }}">
+      <van-cell-group 
+        class="card">
         <van-card 
-          item="item"
-          thumb-link="detail?houseId= item._id "
-          price=" item._source.price " 
-          desc=" item._source.detail " 
-          title=" item._source.title " 
-          thumb="http://pic.ziroom.com/house_images/g2m1/M00/8D/6A/v800x600_ChAFB1uTu06AS1KJABTtfmaWRrM709.JPG">
+          thumb-link="detail?houseUrl={{ item.url }} "
+          price="{{ item.price }}" 
+          desc="{{ item.detail }}" 
+          title="{{ item.title }}" 
+          thumb="{{ item.imageUrls[0] }}">
         </van-card>
       </van-cell-group>
-      <view slot="right" class="van-swipe-cell__right">移除</view>
+      <view 
+        @tap="onRemove({{ item.url }})"
+        slot="right" 
+        class="van-swipe-cell__right">移除</view>
     </van-swipe-cell>
   </view>
 </template>
@@ -19,6 +28,8 @@
 <script>
   import wepy from 'wepy'
   import api from '@/api/api'
+  import state from '@/utils/state'
+  import Notify from '@/components/van/notify/notify'
   export default class Wish extends wepy.page {
     config = {
     'navigationBarTitleText': '心愿单',
@@ -26,26 +37,46 @@
         "van-swipe-cell": "../components/van/swipe-cell/index",
         "van-cell": "../components/van/cell/index",
         'van-card': '../components/van/card/index',
-        'van-tag': '../components/van/tag/index'
+        'van-tag': '../components/van/tag/index',
+        "van-notify": "../components/van/notify/index"
       }
     }
     data = {
+      collections: []
     }
     methods = {
+      onRemove(url) {
+        console.log(url)
+        api.collection({
+          query: {
+            userId: state.getUser().id,
+            houseUrl: url
+          },
+          method: 'DELETE'
+        }).then(res => {
+          if (res.statusCode === 200) {
+            this.collections = this.collections.filter(item => {
+              return item.url !== url
+            })
+              this.$apply()
+            Notify('取消收藏成功！')
+          }
+        })
+      }
     }
     events = {}
-    onLoad() {
-      wx.login({
-        success(res) {
-          if (res.code) {
-            console.log(res);
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
+    onShow() {
+      state.checkLogin()
+      api.collection({
+        pathValue: state.getUser().id,
+        method: 'GET'
+      }).then(res => {
+        if (res.statusCode === 200) {
+          this.collections = res.data
+          this.$apply()
         }
       })
     }
-    // Other properties
   }
 </script>
 

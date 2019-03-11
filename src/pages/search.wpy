@@ -31,7 +31,7 @@
           wx:key="{{ item._id }}" 
           index="{{ item._id }}" 
           item="item"
-          thumb-link="detail?houseId={{ item._id }}"
+          thumb-link="detail?houseUrl={{ item._source.url }}"
           price="{{ item._source.price }}" 
           desc="{{ item._source.detail }}" 
           title="{{ item._source.title }}" 

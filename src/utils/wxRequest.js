@@ -5,6 +5,7 @@ const wxRequest = async (params = {}, url) => {
   tip.loading()
   let data = params.query || {}
   let pathValue = params.pathValue || ''
+  console.log(pathValue)
   let res = await wepy.request({
     url: url + (params.method === 'GET' && pathValue ? '/' + pathValue : ''),
     method: params.method || 'GET',
