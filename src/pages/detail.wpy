@@ -73,7 +73,7 @@
       </view>
     </wux-card>
 
-    <wux-white-space />
+    <!-- <wux-white-space />
     <wux-card bordered title="位置及周边">
       <view class="map_container">
         <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
@@ -82,7 +82,7 @@
         <text class="h1">{{textData.name}}</text>
         <text>{{textData.desc}}</text>
       </view>
-    </wux-card>
+    </wux-card> -->
     <wux-white-space />
     <wux-card bordered title="为您推荐" >
       <view slot="body" class="scroll-view-wrapper">
@@ -110,11 +110,11 @@
       text="{{ collectionText }}"
       @tap="onWish"
     />
-    <van-goods-action-button
+    <!-- <van-goods-action-button
       text="价格分析"
       type="warning"
       bind:click="onClickButton"
-    />
+    /> -->
     <van-goods-action-button
       text="立刻看房"
       bind:click="onClickButton"

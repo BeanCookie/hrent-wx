@@ -136,7 +136,28 @@ export default class Search extends wepy.page {
         type: 'radio',
         label: '区域',
         value: 'address',
-        children: [],
+        children: [
+          {
+            label: '江宁',
+            value: '江宁'
+          },
+          {
+            label: '栖霞',
+            value: '栖霞'
+          },
+          {
+            label: '鼓楼',
+            value: '鼓楼'
+          },
+          {
+            label: '秦淮',
+            value: '秦淮'
+          },
+          {
+            label: '鼓楼',
+            value: '鼓楼'
+          }
+        ],
         groups: ['003']
       },
       {
@@ -289,6 +310,8 @@ export default class Search extends wepy.page {
         this.items[2].children.push(districtItem)
       })
       this.$apply()
+      console.log(this.items);
+      
     })
   }
 }

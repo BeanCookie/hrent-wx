@@ -1,15 +1,29 @@
 <template lang="wxml">
   <view>
-    <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}">
+    <van-swipe-cell 
+      wx:for="{{ recommends }}" 
+      wx:key="{{ item._id }}" 
+      index="{{ item._id }}" 
+      item="item"
+      right-width="{{ 65 }}" left-width="{{ 65 }}">
       <view slot="left" class="van-swipe-cell__left">喜欢</view>
       <van-cell-group class="card">
         <van-card 
-          item="item"
-          thumb-link="detail?houseId= item._id "
-          price=" item._source.price " 
-          desc=" item._source.detail " 
-          title=" item._source.title " 
-          thumb="http://pic.ziroom.com/house_images/g2m1/M00/8D/6A/v800x600_ChAFB1uTu06AS1KJABTtfmaWRrM709.JPG">
+          thumb-link="detail?houseUrl={{ item._source.url }}"
+          price="{{ item._source.price }}" 
+          desc="{{ item._source.detail }}" 
+          title="{{ item._source.title }}" 
+          tag="{{ item._source.air_part.air_quality.show_info.is_new_des }}" 
+          thumb="{{ item._source.image_urls[0] }}">
+          <view slot="tags">
+            <van-tag 
+              wx:for="{{ item._source.tags }}"
+              wx:key="{{ item._id }}"
+              item="item"
+              plain 
+              type="danger" 
+              custom-class="tag">{{ item }}</van-tag>
+          </view>
         </van-card>
       </van-cell-group>
       <view slot="right" class="van-swipe-cell__right">不喜欢</view>
@@ -18,33 +32,54 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import api from '@/api/api'
-  export default class Recommend extends wepy.page {
-    config = {
-      'navigationBarTitleText': '个性推荐',
-      usingComponents: {
-        "van-swipe-cell": "../components/van/swipe-cell/index",
-        "van-cell": "../components/van/cell/index",
-        'van-card': '../components/van/card/index',
-        'van-tag': '../components/van/tag/index'
-      }
+import wepy from 'wepy';
+import api from '@/api/api';
+const DEFAULT_IMAGE = 'http://www.51gaifang.com/tu/UploadSoftPic/201902/2019022515282279.jpg'
+export default class Recommend extends wepy.page {
+  config = {
+    navigationBarTitleText: '个性推荐',
+    usingComponents: {
+      'van-swipe-cell': '../components/van/swipe-cell/index',
+      'van-cell': '../components/van/cell/index',
+      'van-card': '../components/van/card/index',
+      'van-tag': '../components/van/tag/index'
     }
-    data = {
-    }
-    methods = {
-    }
-    events = {}
-    onLoad() {
-      
-    }
-    // Other properties
+  };
+  data = {
+    params: {
+      city: '南京',
+      keyword: '中'
+    },
+    recommends: []
+  };
+  methods = {};
+  events = {};
+  onLoad() {
+    api
+      .query({
+        query: {
+          params: this.params
+        },
+        method: 'POST'
+      })
+      .then(res => {
+        this.recommends = res.data.hits;
+        this.recommends.forEach(hit => {
+          if (hit._source.image_urls === undefined) {
+            hit._source.image_urls = [];
+            hit._source.image_urls.push(DEFAULT_IMAGE);
+          }
+        });
+        this.$apply();
+      });
   }
+  // Other properties
+}
 </script>
 
 
 <style lang="less">
-  /** less **/
+/** less **/
 .van-swipe-cell__left {
   display: inline-block;
   position: relative;
@@ -57,7 +92,7 @@
   color: #fff;
   text-align: center;
   background-color: #f44;
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 .van-swipe-cell__right {
@@ -70,11 +105,11 @@
   color: #fff;
   text-align: center;
   background-color: #444;
-  vertical-align:middle;
+  vertical-align: middle;
   position: relative;
   top: 25px;
 }
-.card .van-card__content{
+.card .van-card__content {
   top: 10px;
 }
 </style>
